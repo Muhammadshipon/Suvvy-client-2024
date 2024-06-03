@@ -1,9 +1,12 @@
+import Navbar from "../Components/Navbar";
+import Home from "../Pages/Home";
 
 
 const MainLayouts = () => {
   return (
     <div>
-      main
+      <Navbar></Navbar>
+      <Home></Home>
     </div>
   );
 };
