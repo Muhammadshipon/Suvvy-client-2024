@@ -11,7 +11,7 @@ const Navbar = () => {
         
          </>
   return (
-    <div className="navbar px-20  text-white bg-gradient-to-r from-[#36347C] to-[#A0ABEB] rounded-b-full">
+    <div className="navbar px-20 fixed opacity-95  text-white bg-gradient-to-r from-[#36347C] to-[#A0ABEB] rounded-b-full">
     <div className="navbar-start">
       <div className="dropdown">
         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -21,7 +21,7 @@ const Navbar = () => {
           {link}
         </ul>
       </div>
-      <a className="btn btn-ghost text-2xl font-sans">Suvvy</a>
+      <a className="btn btn-ghost text-4xl font-sans">Suvvy</a>
     </div>
     <div className="navbar-center hidden lg:flex">
       <ul className="menu menu-horizontal px-1">
