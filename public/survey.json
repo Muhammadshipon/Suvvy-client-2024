@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Favorite Ice Cream Flavor",
+    "short_description": "Do you like vanilla ice cream the most?",
+    "total_votes": 2345,
+    "category": "Food & Drink",
+    "votes": {
+      "yes": 1200,
+      "no": 1145
+    }
+  },
+  {
+    "title": "Preferred Workout Routine",
+    "short_description": "Is cardio your preferred workout routine?",
+    "total_votes": 1876,
+    "category": "Health & Fitness",
+    "votes": {
+      "yes": 987,
+      "no": 889
+    }
+  },
+  {
+    "title": "Best Movie of the Year",
+    "short_description": "Do you think 'Inception' was the best movie this year?",
+    "total_votes": 4567,
+    "category": "Entertainment",
+    "votes": {
+      "yes": 2500,
+      "no": 2067
+    }
+  },
+  {
+    "title": "Ideal Vacation Destination",
+    "short_description": "Would you prefer to vacation in Hawaii?",
+    "total_votes": 3210,
+    "category": "Travel",
+    "votes": {
+      "yes": 1800,
+      "no": 1410
+    }
+  },
+  {
+    "title": "Favorite Book Genre",
+    "short_description": "Is fiction your favorite book genre?",
+    "total_votes": 1987,
+    "category": "Literature",
+    "votes": {
+      "yes": 1098,
+      "no": 889
+    }
+  },
+  {
+    "title": "Best Smartphone Brand",
+    "short_description": "Do you think Apple is the best smartphone brand?",
+    "total_votes": 2890,
+    "category": "Technology",
+    "votes": {
+      "yes": 1600,
+      "no": 1290
+    }
+  }
+]
