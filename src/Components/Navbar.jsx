@@ -29,9 +29,9 @@ const Navbar = () => {
       </ul>
     </div>
     <div className="navbar-end">
-      <Link className="0">
-      <button className=" text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-sm px-8 py-2 rounded-full hover:scale-105 ">Login</button>
-      </Link>
+      
+      <button className=" text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-sm px-8 py-2 rounded-full hover:scale-105 "><Link to="/login" className="0">Login</Link></button>
+      
     </div>
   </div>
   );

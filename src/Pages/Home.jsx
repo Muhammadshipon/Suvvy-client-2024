@@ -1,3 +1,4 @@
+import { ScrollRestoration } from "react-router-dom";
 import Banner from "../Components/Banner";
 import BuildSurveySection from "../Components/BuildSurveySection";
 import FAQSection from "../Components/FAQSection";
@@ -15,6 +16,7 @@ const Home = () => {
       <LatestSurveySection></LatestSurveySection>
        <BuildSurveySection></BuildSurveySection>
       <FAQSection></FAQSection>
+      <ScrollRestoration></ScrollRestoration>
     </div>
   );
 };

@@ -3,7 +3,7 @@
 const Footer = () => {
   return (
     <div>
-      <footer className="footer relative rounded-t-[100px] footer-center p-10 bg-primary text-primary-content">
+      <footer className="footer relative rounded-t-[100px] footer-center p-10  bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-primary-content">
   <aside>
   <a className="btn btn-ghost text-4xl font-sans">Suvvy</a>
     <p className="font-bold">
