@@ -1,13 +1,88 @@
 import { useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-import { Link, ScrollRestoration } from "react-router-dom";
+import { Link, ScrollRestoration, useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 
 const Register = () => {
+  const axiosPublic = useAxiosPublic();
   const [showPassword,setShowPassword] = useState(false);
-  const handleRegister = e =>{
+  const {createUser,updateUserProfile} = useAuth();
+  const navigate = useNavigate();
+
+
+  const handleRegister = e=>{
     e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const image = form.photo.value;
+    const password = form.password.value;
+    console.log(name,email,image,password);
+
+
+    if(!/^(?=.*[a-z])(?=.*[A-Z]).*$/.test(password)){
+      
+      Swal.fire({
+        title: "Password Type is Wrong",
+        text: "Your password should have at least one upperCase and lowerCase character",
+        icon: "error"
+      });
+      return ;
+    }
+   
+    else if(password.length<6){
+      Swal.fire({
+        title: "Password Type is Wrong",
+        text: "password must be at least 6 character",
+        icon: "error"
+      });
+     return;
+    }
+
+
+
+
+
+
+    createUser(email,password)
+    .then(result=>{
+     const loggedUser = result.user;
+     console.log(loggedUser);
+     updateUserProfile(name,image)
+     .then(() => {
+      const userInf = {
+        name: name,
+        email:email,
+        role: 'user'
+      }
+      axiosPublic.post('/users',userInf)
+      .then(res=>{
+        console.log(res.data);
+        if(res.data.insertedId){
+          Swal.fire({
+            title: "Create user SUCCESSFULLY!",
+           
+            icon: "success"
+          });
+          navigate("/");
+        }
+      })
+     
+    }).catch((error) => {
+      console.log(error.message)
+    });
+    })
+    .catch(error=>{
+     console.log(error.message);
+    })
+
   }
+
+
+
 
   return (
     <div className="flex justify-center item-center px-5">

@@ -1,12 +1,57 @@
-import { Link, ScrollRestoration } from "react-router-dom";
+import { Link, ScrollRestoration, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import useAuth from "../hooks/useAuth";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 
 const Login = () => {
+const axiosPublic = useAxiosPublic();
+ const navigate = useNavigate(); 
+const {signIn,googleSignIn} = useAuth();
+
   const handleLogIn = e =>{
     e.preventDefault();
-  }
-  const handleGoogleLogIn =()=>{
+    const form = e.target;
+     const email = form.email.value;
+     const password = form.password.value;
+     console.log(email,password);
 
+     signIn(email,password)
+     .then(result=>{
+      const user = result.user;
+      console.log(user);
+      Swal.fire({
+        title: "lOG IN SUCCESSFULLY!",
+       
+        icon: "success"
+      });
+      // navigate(from);
+     })
+     .catch(error=>{
+      console.log(error.message);
+     })
+  }
+
+
+
+  const handleGoogleLogIn =()=>{
+    googleSignIn()
+    .then(res=>{ 
+      const userInf = {
+      name: res.user.displayName,
+      email: res.user.email,
+      role:'user'
+      }
+      console.log(userInf)
+      axiosPublic.post('/users',userInf)
+      .then(res=>{
+        console.log(res.data);
+        navigate('/')
+      })
+      console.log(res.user);
+      
+    })
+    .catch(err=>{console.log(err.message)})
   }
   return (
     <div className="flex justify-center items-center mb-16 px-5">
