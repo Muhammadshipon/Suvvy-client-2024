@@ -1,9 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 
 
 
 const Navbar = () => {
+  const {user,logOut} = useAuth();
   const link = <>
          <NavLink><li><a>Home</a></li></NavLink>
          <NavLink><li><a>Surveys</a></li></NavLink>
@@ -29,8 +31,29 @@ const Navbar = () => {
       </ul>
     </div>
     <div className="navbar-end">
+      {
+        user?
+        <div className="dropdown dropdown-end">
+      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar tooltip tooltip-left" data-tip={user?.displayName}>
+        <div className="w-14 rounded-full" >
+          <img   src={user?.photoURL} />
+        </div>
+      </div>
+      <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+        <li>
+          <a className="justify-between">
+            Profile
+            <span className="badge">New</span>
+          </a>
+        </li>
+        <Link to='/dashboard'><li><a>Dashboard</a></li></Link>
+        <li onClick={logOut}><a>Logout</a></li>
+      </ul>
+    </div>
+        :
+        <button className=" text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-sm px-8 py-2 rounded-full hover:scale-105 "><Link to="/login" className="0">Login</Link></button>
+      }
       
-      <button className=" text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-sm px-8 py-2 rounded-full hover:scale-105 "><Link to="/login" className="0">Login</Link></button>
       
     </div>
   </div>
