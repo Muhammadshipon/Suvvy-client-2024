@@ -2,6 +2,9 @@
 // import axios from 'axios';
 
 import { useState } from "react";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
+import useAuth from "../../../hooks/useAuth";
 
 // function CreateSurvey() {
 //   const [title, setTitle] = useState('');
@@ -125,7 +128,8 @@ import { useState } from "react";
 
 
 const CreateSurvey = () => {
-
+  const axiosPublic = useAxiosPublic();
+  const {user} = useAuth();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
@@ -133,9 +137,58 @@ const CreateSurvey = () => {
   const [questions, setQuestions] = useState([{ title: '' }]);
 
 
+  const handleQuestionChange = (idx, e) => {
+    const newQuestions = [...questions];
+    newQuestions[idx].title = e.target.value;
+    setQuestions(newQuestions);
+  };
+
+
+const handleAddQuestion = ()=>{
+  setQuestions([...questions, {title:''}])
+}
+const handleRemoveQuestion=(idx)=>{
+  const newQuestions = questions.filter(( q,i) => i !== idx);
+  setQuestions(newQuestions);
+
+}
 
 
 
+const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        const surveyData = {
+          title,
+          description,
+          category,
+          deadline,
+          questions,
+          status:'publish',
+          surveyor: user?.email
+        };
+        console.log(surveyData);
+        const {data} = await axiosPublic.post('/create', surveyData);
+        console.log('Survey created successfully:', data);
+
+        if(data.insertedId){
+          Swal.fire({
+            title: "Survey Created SUCCESSFULLY!",
+           
+            icon: "success"
+          });
+        }
+        setTitle('');
+        setDescription('');
+        setCategory('');
+        setDeadline('');
+        setQuestions([{ title: '' }]);
+       
+      } catch (error) {
+        console.error('Error creating survey:', error);
+        
+      }
+    };
 
 
 
@@ -148,7 +201,7 @@ const CreateSurvey = () => {
             <section className="bg-white dark:bg-gray-900">
   <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
      
-      <form >
+      <form onSubmit={handleSubmit}>
           <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
               <div className="sm:col-span-2">
                   <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Survey Title</label>
@@ -182,25 +235,28 @@ const CreateSurvey = () => {
               <div className="sm:col-span-2">
                   <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Questions</label>
                  {
-                  questions.map((question,idx)=> <div key={idx}>
-                    
- <input type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type survey question" required/>
+                  questions.map((question,idx)=> (<div className="flex" key={idx}>
+
+ <input type="text" name="question"
+     value={question.title}
+    onChange={(e) => handleQuestionChange(idx, e)}
+ id="name" className="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder={`question - ${idx+1}`} required/>
+  <button className="btn ml-2 bg-orange-600 text-white" onClick={()=>handleRemoveQuestion(idx)}  disabled={questions.length-1 !== idx}>Remove</button>
 
 
 
-
-                  </div>)
+                  </div>))
                  }
  
-
+      <button className="btn bg-cyan-600 text-white" onClick={handleAddQuestion}>Add Question</button>
                  
                     
               </div>
 
              
           </div>
-          <button type="submit" className="  inline-flex  items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center bg-gradient-to-r from-blue-700  to-violet-700 text-white rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
-            Submit
+          <button type="submit" className="w-full  hover:scale-95   items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center bg-gradient-to-r from-blue-700  to-pink-500 text-white rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+            Create New Survey
           </button>
       </form>
   </div>
