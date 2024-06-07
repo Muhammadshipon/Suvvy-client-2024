@@ -5,6 +5,7 @@ import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import CreateSurvey from "../Pages/Dashboard/surveyor/CreateSurvey";
+import SurveyDetails from "../Pages/SurveyDetails";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
       {
         path:"/register",
         element:<Register></Register>
+      },
+      {
+      path:"/survey/details/:surveyId",
+      element:<SurveyDetails></SurveyDetails>
       }
     ]
   },

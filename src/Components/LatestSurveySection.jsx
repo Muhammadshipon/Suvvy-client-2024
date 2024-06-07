@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 import SectionTitle from "../Shared/SectionTitle";
 import SurveyCard from "../Shared/SurveyCard";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 
 const LatestSurveySection = () => {
-  const [surveys,setSurveys] = useState([]);
-  useEffect(()=>{
-    fetch('survey.json')
-    .then(res=>res.json())
-    .then(data=>setSurveys(data));
-    
-  },[])
+  const axiosPublic = useAxiosPublic();
+
+  const {data:surveys=[]} = useQuery({
+    queryKey:['surveys'],
+    queryFn:async()=>{
+      const {data} = await axiosPublic.get('/surveys');
+      return data;
+    }
+  })
   return (
     <div className="px-5 relative bottom-48 bg-white  rounded-t-[100px]   flex flex-col justify-center items-center">
        <SectionTitle>Latest Surveys</SectionTitle>
