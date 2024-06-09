@@ -7,14 +7,18 @@ import useAuth from "../hooks/useAuth";
 
 
 
+
 const SurveyDetails = () => {
  
   const {user} = useAuth();
   const axiosPublic = useAxiosPublic();
   const {surveyId} = useParams();
+  const [selectedOptions, setSelectedOptions] = useState({});
   // console.log(surveyId);
 
-  const {data:survey=[],refetch} = useQuery({
+
+        // get survey data 
+  const {data:survey=[],refetch:refetchForSurvey} = useQuery({
     queryKey:['survey'],
     queryFn:async()=>{
       const {data} = await axiosPublic.get(`/surveys/${surveyId}`);
@@ -22,6 +26,8 @@ const SurveyDetails = () => {
     }
   })
  
+
+        //  get login user data 
   const {data:loggedUser=[]} = useQuery({
     queryKey:['user'],
     enabled:!!user?.email,
@@ -34,64 +40,157 @@ const SurveyDetails = () => {
   console.log(loggedUser);
 
   
-
-  const [selectedOptions, setSelectedOptions] = useState({});
-  
-  const handleOptionChange = (questionId, option) => {
-        setSelectedOptions({
-          ...selectedOptions,
-          [questionId]: option
-        });
-      };
-
-//  console.log(survey)
-
- const handleSubmit = async (e) => {
-      e.preventDefault();
-      try {
-        for (const questionId in selectedOptions) {
-          const vote = selectedOptions[questionId];
-          await axiosPublic.post('/vote', {
-            surveyId,
-            questionId,
-            vote
-          });
-        }
-
-
-        const {data} = await axiosPublic.patch(`/surveys/${surveyId}`,{userEmail:user?.email,
-          userName:user?.displayName
+        // get survey report data 
+        const {data:reports=[],refetch:refetchForReport} = useQuery({
+          queryKey:['reports'],
+           queryFn:async()=>{
+            const {data} = await axiosPublic.get(`/reports`);
+            return data;
+          }
         })
-        // console.log(data);
-        if(data.modifiedCount>0){
-            refetch()
-        Swal.fire({
-          title: "Your Vote Submitted Successfully!",
-         
-          icon: "success"
-        });
-        setDisplayVote(true)
-        }
-       
-       
-      } catch (error) {
-        console.error('Error recording vote:', error);
-      
+
+        // console.log(reports);
+   
+     // get survey comment data 
+     const {data:comments=[],refetch:refetchForComment} = useQuery({
+      queryKey:['comments'],
+       queryFn:async()=>{
+        const {data} = await axiosPublic.get(`/comments`);
+        return data;
       }
-    };
+    })   
+ 
+  
+ 
+       
+
+            
+                   // exist condition 
   const exist = survey?.response?.find(item=>item.userEmail===user?.email);
   console.log('already exist:',exist);
 
-  const totalVotes = survey?.questions.reduce((total, question) => {
+  const existReport = reports.find(report=> report.email === user?.email &&report.surveyId === surveyId );
+ 
+
+  const existComment = comments.find(comment=> comment.email === user?.email &&comment.surveyId === surveyId );
+  console.log('comment already exist?',existComment);
+
+  const dateOver = new Date() > new Date(survey?.deadline) ; 
+
+            
+              
+              
+                  // Vote Count 
+  const totalVotes = survey?.questions?.reduce((total, question) => {
     return total + question.options.yes + question.options.no;
   }, 0);
-  const yesVotes = survey?.questions.reduce((total, question) => {
+  const yesVotes = survey?.questions?.reduce((total, question) => {
     return total + question.options.yes;
   }, 0);
-  const noVotes = survey?.questions.reduce((total, question) => {
+  const noVotes = survey?.questions?.reduce((total, question) => {
     return total + question.options.no;
   }, 0);
+
+  
+
+
+                  // handle all form 
+  const handleOptionChange = (questionId, option) => {
+    setSelectedOptions({
+      ...selectedOptions,
+      [questionId]: option
+    });
+  };
+
+
+
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    for (const questionId in selectedOptions) {
+      const vote = selectedOptions[questionId];
+      await axiosPublic.post('/vote', {
+        surveyId,
+        questionId,
+        vote
+      });
+    }
+
+
+    const {data} = await axiosPublic.patch(`/surveys/${surveyId}`,{userEmail:user?.email,
+      userName:user?.displayName
+    })
+    // console.log(data);
+    if(data.modifiedCount>0){
+        refetchForSurvey();
+       
+    Swal.fire({
+      title: "Your Vote Submitted Successfully!",
      
+      icon: "success"
+    });
+
+  
+    
+    const {data} = await axiosPublic.post('/my-surveys',{surveyId,title:survey?.title,category:survey?.category, email:user?.email});
+    console.log(data);
+  
+    }
+   
+   
+  } catch (error) {
+    console.error('Error recording vote:', error);
+  
+  }
+};
+
+
+
+
+  const handleReport=async (e)=>{
+    e.preventDefault();
+    const report = e.target.report.value;
+    const reportInfo = {surveyId,title:survey?.title, email:user?.email,report}
+  const {data} = await axiosPublic.post('/reports',reportInfo);
+  console.log(data);
+  if(data.insertedId){
+       refetchForReport();
+    Swal.fire({
+      title: "Your Report Submitted Successfully!",
+     
+      icon: "success"
+    });
+    e.target.reset();
+  }
+     
+  }
+
+
+
+
+  const handleComment=async (e)=>{
+    e.preventDefault();
+    const comment = e.target.comment.value;
+    const commentInfo = {surveyId,title:survey?.title, email:user?.email,comment}
+  const {data} = await axiosPublic.post('/comments',commentInfo);
+  console.log(data);
+  if(data.insertedId){
+       refetchForComment();
+    Swal.fire({
+      title: "Your Comment Submitted Successfully!",
+     
+      icon: "success"
+    });
+    e.target.reset();
+  }
+     
+  }
+
+  console.log(loggedUser)
+
   return (
     <div className="pt-20 pb-8 px-5">
       <ScrollRestoration></ScrollRestoration>
@@ -100,7 +199,7 @@ const SurveyDetails = () => {
      
 
      {
-      exist?
+      exist || dateOver?
       <>
        <h3 className="font-bold text-xl text-center">Total Votes: (<span className="text-blue-700 text-2xl">{totalVotes}</span>)</h3>
        <div className="flex flex-col md:flex-row justify-between gap-5 my-8"> 
@@ -152,7 +251,7 @@ const SurveyDetails = () => {
         {
         user?
         
-        loggedUser?.role==='user' && !exist ?
+        loggedUser?.role==='user'||loggedUser?.role==='prouser' && !exist && !dateOver ?
         <button  type="submit" className="bg-blue-500 btn text-white p-2 rounded hover:scale-105">Submit Votes</button>
         :
         <button disabled type="submit" className="bg-blue-500 btn text-white p-2 rounded hover:scale-105">Submit Votes</button>
@@ -163,9 +262,55 @@ const SurveyDetails = () => {
 
 
 
-      {/* <button disabled type="submit" className="  p-2 rounded btn">Submit Votes</button> */}
+      
        
       </form>
+
+
+          {/* comment  */}
+          
+          {
+          user?
+          
+          loggedUser?.role ==='prouser' ?
+            <div>
+            <form onSubmit={handleComment} className="flex  mt-5">
+            <input required type="text" name="comment"  placeholder="Comment here" className="w-full px-3 py-2 border rounded-md border-gray-700 bg-slate-100  text-gray-600" />
+            <input disabled={!!existComment} type="submit" value="Comment" className="btn bg-violet-600 ml-2 text-white" />
+            </form>
+             </div>
+             :''
+
+
+             : ''
+          }
+          
+         
+
+                {/* report  */}
+
+                
+        
+               {loggedUser?.role==='user'|| loggedUser?.role==='prouser' ?
+                 <div>
+                 <form onSubmit={handleReport} className="flex  mt-5">
+                 <input required type="text" name="report"  placeholder="report" className="w-full px-3 py-2 border rounded-md border-gray-700 bg-slate-100  text-gray-600" />
+                 <input disabled={!!existReport} type="submit" value="Report" className="btn bg-pink-600 ml-2 text-white" />
+                 </form>
+                  </div>
+               :
+                ''
+               } 
+        
+       
+        
+
+
+                
+    
+                 
+
+
       </div>
     </div>
   );
@@ -177,34 +322,5 @@ export default SurveyDetails;
 
 
 
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
 
-
-// function SurveyVote() {
-//   const { surveyId } = useParams();
-//  
-//   const [errorMessage, setErrorMessage] = useState('');
-
-//   useEffect(() => {
-//     fetchSurvey();
-//   }, [surveyId]);
-
-//   const fetchSurvey = async () => {
-//     try {
-//       const response = await axios.get(`/api/surveys/${surveyId}`);
-//       setSurvey(response.data);
-//     } catch (error) {
-//       console.error('Error fetching survey:', error);
-//       setErrorMessage('Failed to fetch survey. Please try again.');
-//     }
-//   };
-
-//   
-
-//  
-
-//   if (!survey) return <div>Loading...</div>;
-
-//   return (
    
