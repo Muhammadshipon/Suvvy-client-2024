@@ -7,10 +7,10 @@ import { AiOutlineBars } from 'react-icons/ai'
 import { BsGraphUp } from 'react-icons/bs'
 import { NavLink } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { MdHomeWork } from 'react-icons/md'
+import { MdComment, MdHomeWork } from 'react-icons/md'
 import useAuth from '../../hooks/useAuth'
 import useLoggedUser from '../../hooks/useLoggedUser'
-import { FaOptinMonster } from 'react-icons/fa6'
+import { FaBookOpen, FaCircleUser, FaOptinMonster } from 'react-icons/fa6'
 
 const Sidebar = () => {
   const { logOut } = useAuth();
@@ -80,7 +80,7 @@ const Sidebar = () => {
               }`
             }
           >
-            <FcSettings className='w-5 h-5' />
+            <FaCircleUser className='w-5 h-5' />
 
             <span className='mx-4 font-medium'>Profile</span>
           </NavLink>
@@ -172,27 +172,76 @@ const Sidebar = () => {
                   }`
                 }
               >
-                <BsFillHouseAddFill className='w-5 h-5' />
+                
+                <FaBookOpen className='w-5 h-5' />
 
                 <span className='mx-4 font-medium'>Reports</span>
               </NavLink>
-              {/* My Listing */}
+              
+             
+            
+              
+              </>
+            }
+
+                  {/* proUser  */}
+
+          {
+              loggedUser?.role === 'prouser'&&<>
+               
+             
               <NavLink
-                to='my-listings'
+                to='/dashboard/user/my-surveys'
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
+                    isActive ? 'bg-gray-300  text-gray-100' : 'text-gray-700'
+                  }`
+                }
+              >
+                
+                 <BsClipboardCheck className='w-5 h-5'/>
+                <span className='mx-4 font-medium'>My Surveys</span>
+              </NavLink>
+
+              
+              <NavLink
+                to='/dashboard/user/my-reports'
                 className={({ isActive }) =>
                   `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
                     isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-700'
                   }`
                 }
               >
-                <MdHomeWork className='w-5 h-5' />
+                 <FaBookOpen className='w-5 h-5' />
 
-                <span className='mx-4 font-medium'>My Listings</span>
+                <span className='mx-4 font-medium'>Reports</span>
+              </NavLink>
+              
+              <NavLink
+                to='/dashboard/user/my-comments'
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
+                    isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-700'
+                  }`
+                }
+              >
+                <MdComment className='w-5 h-5' />
+
+                <span className='mx-4 font-medium'>My Comments</span>
               </NavLink>
             
               
               </>
             }
+
+
+
+
+
+
+
+
+
             </nav>
                 
 

@@ -9,6 +9,7 @@ import SurveyDetails from "../Pages/SurveyDetails";
 import MySurveys from "../Pages/Dashboard/user/MySurveys";
 import PrivateRoute from "./PrivateRoute";
 import MyReports from "../Pages/Dashboard/user/MyReports";
+import MyComments from "../Pages/Dashboard/proUser/MyComments";
 
 export const router = createBrowserRouter([
   {
@@ -51,6 +52,11 @@ export const router = createBrowserRouter([
       {
         path:'/dashboard/user/my-reports',
         element:<PrivateRoute><MyReports></MyReports></PrivateRoute>
+      } ,
+            // pro User    
+      {
+        path:'/dashboard/user/my-comments',
+        element:<PrivateRoute><MyComments></MyComments></PrivateRoute>
       }    
     ]
   }

@@ -51,7 +51,7 @@ const MySurveys = () => {
                <td>{idx+1}</td>
                <td>
                  
-                   <p>${item.title}</p>
+                   <p>{item.title}</p>
                </td>
               
               
