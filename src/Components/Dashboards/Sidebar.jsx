@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { GrLogout } from 'react-icons/gr'
 import { FcSettings } from 'react-icons/fc'
-import { BsFillHouseAddFill, } from 'react-icons/bs'
+import { BsClipboardCheck, BsFillHouseAddFill, } from 'react-icons/bs'
 import {  } from 'react-icons/gr'
 import { AiOutlineBars } from 'react-icons/ai'
 import { BsGraphUp } from 'react-icons/bs'
@@ -9,9 +9,12 @@ import { NavLink } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { MdHomeWork } from 'react-icons/md'
 import useAuth from '../../hooks/useAuth'
+import useLoggedUser from '../../hooks/useLoggedUser'
+import { FaOptinMonster } from 'react-icons/fa6'
 
 const Sidebar = () => {
-  const { logOut } = useAuth()
+  const { logOut } = useAuth();
+  const [loggedUser] = useLoggedUser();
   const [isActive, setActive] = useState(false)
 
   // Sidebar Responsive Handler
@@ -58,15 +61,39 @@ const Sidebar = () => {
           <div className='flex flex-col justify-between flex-1 mt-6'>
             {/* Conditional toggle button here.. */}
 
+
+
+
+
+
+
+
             {/*  Menu Items */}
+
+            <nav>
+
+            <NavLink
+            to='/dashboard' end
+            className={({ isActive }) =>
+              `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
+                isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-700'
+              }`
+            }
+          >
+            <FcSettings className='w-5 h-5' />
+
+            <span className='mx-4 font-medium'>Profile</span>
+          </NavLink>
+
+
+
 
 
             {/* surveyor  */}
-            {}
-            <nav>
-              {/* Statistics */}
+            {loggedUser?.role === 'surveyor'&&<>
+           
               <NavLink
-                to='statistics'
+                to='/dashboard/surveyor/surveys'
                 className={({ isActive }) =>
                   `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
                     isActive ? 'bg-gray-300  text-gray-100' : 'text-gray-700'
@@ -75,12 +102,15 @@ const Sidebar = () => {
               >
                 <BsGraphUp className='w-5 h-5' />
 
-                <span className='mx-4 font-medium'>Statistics</span>
+                <span className='mx-4 font-medium'>Surveys</span>
               </NavLink>
 
-              {/* Add Room */}
+
+
+
+              {/* Add Survey */}
               <NavLink
-                to='/dashboard'
+                to='/dashboard/create-survey'
                 className={({ isActive }) =>
                   `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
                     isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-700'
@@ -91,9 +121,9 @@ const Sidebar = () => {
 
                 <span className='mx-4 font-medium'>Create Survey</span>
               </NavLink>
-              {/* My Listing */}
+             
               <NavLink
-                to='my-listings'
+                to='/dashboard/surveyor/response'
                 className={({ isActive }) =>
                   `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
                     isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-700'
@@ -102,31 +132,40 @@ const Sidebar = () => {
               >
                 <MdHomeWork className='w-5 h-5' />
 
-                <span className='mx-4 font-medium'>My Listings</span>
+                <span className='mx-4 font-medium'>Response</span>
               </NavLink>
-            </nav>
+            
+            
+            
+            
+            </>}
+          
 
 
 
             {/* user  */}
-            <nav>
+
+
+            {
+              loggedUser?.role === 'user'&&<>
+               
               {/* My surveys */}
               <NavLink
-                to='statistics'
+                to='/dashboard/user/my-surveys'
                 className={({ isActive }) =>
                   `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
                     isActive ? 'bg-gray-300  text-gray-100' : 'text-gray-700'
                   }`
                 }
               >
-                <BsGraphUp className='w-5 h-5' />
-
+                
+                 <BsClipboardCheck className='w-5 h-5'/>
                 <span className='mx-4 font-medium'>My Surveys</span>
               </NavLink>
 
-              {/* Report */}
+              
               <NavLink
-                to='/dashboard'
+                to='/dashboard/user/reports'
                 className={({ isActive }) =>
                   `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
                     isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-700'
@@ -150,7 +189,12 @@ const Sidebar = () => {
 
                 <span className='mx-4 font-medium'>My Listings</span>
               </NavLink>
-            </nav>      
+            
+              
+              </>
+            }
+            </nav>
+                
 
 
 
@@ -167,18 +211,7 @@ const Sidebar = () => {
           <hr />
 
           {/* Profile Menu */}
-          <NavLink
-            to='/dashboard/profile'
-            className={({ isActive }) =>
-              `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
-                isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-700'
-              }`
-            }
-          >
-            <FcSettings className='w-5 h-5' />
-
-            <span className='mx-4 font-medium'>Profile</span>
-          </NavLink>
+       
           <button
             onClick={logOut}
             className='flex w-full items-center px-4 py-2 mt-5 text-gray-600 hover:bg-gray-300   hover:text-gray-700 transition-colors duration-300 transform'

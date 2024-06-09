@@ -4,6 +4,7 @@ import useAxiosPublic from "../hooks/useAxiosPublic";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import useAuth from "../hooks/useAuth";
+import useLoggedUser from "../hooks/useLoggedUser";
 
 
 
@@ -11,10 +12,11 @@ import useAuth from "../hooks/useAuth";
 const SurveyDetails = () => {
  
   const {user} = useAuth();
+  const [loggedUser] = useLoggedUser();
   const axiosPublic = useAxiosPublic();
   const {surveyId} = useParams();
   const [selectedOptions, setSelectedOptions] = useState({});
-  // console.log(surveyId);
+  
 
 
         // get survey data 
@@ -27,17 +29,7 @@ const SurveyDetails = () => {
   })
  
 
-        //  get login user data 
-  const {data:loggedUser=[]} = useQuery({
-    queryKey:['user'],
-    enabled:!!user?.email,
-    queryFn:async()=>{
-      const {data} = await axiosPublic.get(`/users?email=${user?.email}`);
-      console.log(data);
-      return data;
-    }
-  })
-  console.log(loggedUser);
+        
 
   
         // get survey report data 
@@ -251,7 +243,7 @@ const handleSubmit = async (e) => {
         {
         user?
         
-        loggedUser?.role==='user'||loggedUser?.role==='prouser' && !exist && !dateOver ?
+        loggedUser?.role==='user' && !exist && !dateOver ||loggedUser?.role==='prouser'&& !exist && !dateOver ?
         <button  type="submit" className="bg-blue-500 btn text-white p-2 rounded hover:scale-105">Submit Votes</button>
         :
         <button disabled type="submit" className="bg-blue-500 btn text-white p-2 rounded hover:scale-105">Submit Votes</button>
