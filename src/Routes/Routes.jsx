@@ -10,6 +10,10 @@ import MySurveys from "../Pages/Dashboard/user/MySurveys";
 import PrivateRoute from "./PrivateRoute";
 import MyReports from "../Pages/Dashboard/user/MyReports";
 import MyComments from "../Pages/Dashboard/proUser/MyComments";
+import UpdateSurveys from "../Pages/Dashboard/surveyor/UpdateSurveys";
+import UpdateSurveyForm from "../Pages/Dashboard/surveyor/UpdateSurveyForm";
+import SurveyResponse from "../Pages/Dashboard/surveyor/SurveyResponse";
+import SurveyResponseDetails from "../Pages/Dashboard/surveyor/SurveyResponseDetails";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +46,22 @@ export const router = createBrowserRouter([
       {
         path:'/dashboard/create-survey',
         element:<PrivateRoute><CreateSurvey></CreateSurvey></PrivateRoute>
+      },
+      {
+        path:'/dashboard/update-surveys',
+        element:<PrivateRoute><UpdateSurveys></UpdateSurveys></PrivateRoute>
+      },
+      {
+        path:'/dashboard/update/:id',
+        element:<PrivateRoute><UpdateSurveyForm></UpdateSurveyForm></PrivateRoute>
+      },
+      {
+        path:"/dashboard/surveyor/response",
+        element:<PrivateRoute><SurveyResponse></SurveyResponse></PrivateRoute>
+      },
+      {
+        path:"/dashboard/response/:id",
+        element:<PrivateRoute><SurveyResponseDetails></SurveyResponseDetails></PrivateRoute>
       },
 
           //  user 

@@ -75,7 +75,7 @@ const MySurveys = () => {
           
          </tbody>
         
-        
+        {mySurveys.length===0 && <p className="text-xl mt-10 ml-5">No Data Available...</p>}
 
        </table>
      </div> 

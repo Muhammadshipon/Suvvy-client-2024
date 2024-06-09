@@ -1,16 +1,15 @@
 import { useState } from 'react'
 import { GrLogout } from 'react-icons/gr'
-import { FcSettings } from 'react-icons/fc'
-import { BsClipboardCheck, BsFillHouseAddFill, } from 'react-icons/bs'
+import { BsClipboardCheck } from 'react-icons/bs'
 import {  } from 'react-icons/gr'
 import { AiOutlineBars } from 'react-icons/ai'
-import { BsGraphUp } from 'react-icons/bs'
 import { NavLink } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { MdComment, MdHomeWork } from 'react-icons/md'
+import { MdComment, MdFeedback } from 'react-icons/md'
 import useAuth from '../../hooks/useAuth'
 import useLoggedUser from '../../hooks/useLoggedUser'
-import { FaBookOpen, FaCircleUser, FaOptinMonster } from 'react-icons/fa6'
+import { FaBookOpen, FaCircleUser } from 'react-icons/fa6'
+import { BiSolidBookAdd, BiSolidEditAlt } from 'react-icons/bi'
 
 const Sidebar = () => {
   const { logOut } = useAuth();
@@ -91,24 +90,6 @@ const Sidebar = () => {
 
             {/* surveyor  */}
             {loggedUser?.role === 'surveyor'&&<>
-           
-              <NavLink
-                to='/dashboard/surveyor/surveys'
-                className={({ isActive }) =>
-                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
-                    isActive ? 'bg-gray-300  text-gray-100' : 'text-gray-700'
-                  }`
-                }
-              >
-                <BsGraphUp className='w-5 h-5' />
-
-                <span className='mx-4 font-medium'>Surveys</span>
-              </NavLink>
-
-
-
-
-              {/* Add Survey */}
               <NavLink
                 to='/dashboard/create-survey'
                 className={({ isActive }) =>
@@ -117,11 +98,24 @@ const Sidebar = () => {
                   }`
                 }
               >
-                <BsFillHouseAddFill className='w-5 h-5' />
+                <BiSolidBookAdd className='w-5 h-5' />
 
                 <span className='mx-4 font-medium'>Create Survey</span>
               </NavLink>
-             
+
+              <NavLink
+                to='/dashboard/update-surveys'
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
+                    isActive ? 'bg-gray-300  text-gray-100' : 'text-gray-700'
+                  }`
+                }
+              >
+                <BiSolidEditAlt className='w-5 h-5' />
+
+                <span className='mx-4 font-medium'>Update Surveys</span>
+              </NavLink>
+
               <NavLink
                 to='/dashboard/surveyor/response'
                 className={({ isActive }) =>
@@ -130,13 +124,12 @@ const Sidebar = () => {
                   }`
                 }
               >
-                <MdHomeWork className='w-5 h-5' />
+                <MdFeedback className='w-5 h-5' />
 
                 <span className='mx-4 font-medium'>Response</span>
               </NavLink>
-            
-            
-            
+
+
             
             </>}
           

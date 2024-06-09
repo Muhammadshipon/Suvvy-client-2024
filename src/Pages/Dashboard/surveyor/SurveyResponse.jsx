@@ -3,26 +3,24 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
 import SectionTitle from "../../../Shared/SectionTitle";
-import { FaEye } from "react-icons/fa6";
+import { FaListCheck } from "react-icons/fa6";
 
 
-const MyComments = () => {
+const SurveyResponse = () => {
   const {user} = useAuth();
   const axiosSecure = useAxiosSecure();
-
-  const {data:comments=[]} = useQuery({
-    queryKey:['mySurveys'],
+  const {data:surveys=[]} = useQuery({
+    queryKey:['surveys'],
     enabled:!!user?.email,
-    queryFn:async()=>{
-      const {data} = await axiosSecure.get(`/my-comments?email=${user?.email}`);
-      console.log(data);
-      return data;
+    queryFn: async()=>{
+      const {data} = await axiosSecure.get(`/survey?email=${user?.email}`);
+      return data; 
     }
   })
-  console.log(comments);
+  console.log(surveys);
   return (
     <div className="text-center">
-    <SectionTitle>My Comments </SectionTitle>
+    <SectionTitle>surveys Responses</SectionTitle>
 
     <div className="overflow-x-auto max-w-5xl px-10 mx-auto mb-10">
      <table className="table">
@@ -32,9 +30,9 @@ const MyComments = () => {
            <th>SI</th>
            <th>Survey Title</th>
           
-           <th>Comment</th>
+           <th>Category</th>
 
-           <th>View Survey</th>
+           <th>Responses</th>
          </tr>
        </thead>
        <tbody>
@@ -43,7 +41,7 @@ const MyComments = () => {
 
 
          {
-           comments.map((item,idx)=>(
+           surveys.map((item,idx)=>(
 
              <tr key={item._id}>
              <td>{idx+1}</td>
@@ -55,10 +53,10 @@ const MyComments = () => {
             
 
              <td>
-               {item.comment}
+               {item.category}
              </td>
              <th>
-           <Link to={`/survey/details/${item.surveyId}`}><span className="flex items-center gap-2"><FaEye></FaEye>view</span></Link>
+           <Link to={`/dashboard/response/${item._id}`}><span className=" text-pink-600 flex items-center gap-2"><FaListCheck/>Details</span></Link>
              </th>
            </tr>
           
@@ -73,7 +71,7 @@ const MyComments = () => {
         
        </tbody>
       
-       {comments.length===0 && <p className="text-xl mt-10 ml-5">No Data Available...</p>}
+      {surveys.length===0 && <p className="text-xl mt-10 ml-5">No Data Available...</p>}
 
      </table>
    </div> 
@@ -81,4 +79,4 @@ const MyComments = () => {
   );
 };
 
-export default MyComments;
+export default SurveyResponse;

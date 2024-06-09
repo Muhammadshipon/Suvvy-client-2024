@@ -210,7 +210,7 @@ const handleSubmit = async (e) => {
      }
 
       <p className="my-3 font-bold">{survey.description}</p>
-      <p className="my-3">Deadline:{survey.deadline}</p>
+      <p className="my-3">Deadline : {survey.deadline}</p>
       <form onSubmit={handleSubmit}>
         {survey.questions?.map((question,idx) => (
           <div key={question._id} className="mb-4">
@@ -283,7 +283,11 @@ const handleSubmit = async (e) => {
 
                 
         
-               {loggedUser?.role==='user'|| loggedUser?.role==='prouser' ?
+               {
+               user?
+               
+               
+               loggedUser?.role==='user'|| loggedUser?.role==='prouser' ?
                  <div>
                  <form onSubmit={handleReport} className="flex  mt-5">
                  <input required type="text" name="report"  placeholder="report" className="w-full px-3 py-2 border rounded-md border-gray-700 bg-slate-100  text-gray-600" />
@@ -291,6 +295,8 @@ const handleSubmit = async (e) => {
                  </form>
                   </div>
                :
+                ''
+                :
                 ''
                } 
         
