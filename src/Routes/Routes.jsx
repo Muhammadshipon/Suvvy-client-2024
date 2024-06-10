@@ -14,6 +14,7 @@ import UpdateSurveys from "../Pages/Dashboard/surveyor/UpdateSurveys";
 import UpdateSurveyForm from "../Pages/Dashboard/surveyor/UpdateSurveyForm";
 import SurveyResponse from "../Pages/Dashboard/surveyor/SurveyResponse";
 import SurveyResponseDetails from "../Pages/Dashboard/surveyor/SurveyResponseDetails";
+import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 
 export const router = createBrowserRouter([
   {
@@ -77,7 +78,12 @@ export const router = createBrowserRouter([
       {
         path:'/dashboard/user/my-comments',
         element:<PrivateRoute><MyComments></MyComments></PrivateRoute>
-      }    
+      },    
+            //  Admin 
+      {
+        path:'/dashboard/admin/manage-users',
+        element:<PrivateRoute><ManageUsers></ManageUsers></PrivateRoute>
+      },    
     ]
   }
 ]);

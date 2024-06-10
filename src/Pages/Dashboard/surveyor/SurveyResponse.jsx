@@ -29,7 +29,7 @@ const SurveyResponse = () => {
          <tr>
            <th>SI</th>
            <th>Survey Title</th>
-          
+            <th>Deadline</th>
            <th>Category</th>
 
            <th>Responses</th>
@@ -50,7 +50,7 @@ const SurveyResponse = () => {
                  <p>{item.title}</p>
              </td>
             
-            
+            <td>{item.deadline}</td>
 
              <td>
                {item.category}

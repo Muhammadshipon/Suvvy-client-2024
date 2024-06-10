@@ -8,8 +8,9 @@ import { Link } from 'react-router-dom'
 import { MdComment, MdFeedback } from 'react-icons/md'
 import useAuth from '../../hooks/useAuth'
 import useLoggedUser from '../../hooks/useLoggedUser'
-import { FaBookOpen, FaCircleUser } from 'react-icons/fa6'
+import { FaBookOpen, FaCircleUser, FaUsersGear, FaUsersRectangle } from 'react-icons/fa6'
 import { BiSolidBookAdd, BiSolidEditAlt } from 'react-icons/bi'
+import { FaRegUser, FaUserAlt, FaUserEdit, FaUsers, FaUsersCog } from 'react-icons/fa'
 
 const Sidebar = () => {
   const { logOut } = useAuth();
@@ -226,6 +227,48 @@ const Sidebar = () => {
               
               </>
             }
+
+
+
+
+                    {/* admin  */}
+                    {
+              loggedUser?.role === 'admin'&&<>
+               
+              {/* My surveys */}
+              <NavLink
+                to='/dashboard/admin/manage-users'
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
+                    isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-700'
+                  }`
+                }
+              >
+                
+                 <FaUsersCog className='w-6 h-6'/>
+                <span className='mx-4 font-medium'>Manage User</span>
+              </NavLink>
+
+              
+              <NavLink
+                to='/dashboard/user/my-reports'
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
+                    isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-700'
+                  }`
+                }
+              >
+                
+                <FaBookOpen className='w-5 h-5' />
+
+                <span className='mx-4 font-medium'>Reports</span>
+              </NavLink>
+              
+             
+            
+              
+              </>
+            }           
 
 
 

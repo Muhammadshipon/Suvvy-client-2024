@@ -29,7 +29,7 @@ const UpdateSurveys = () => {
          <tr>
            <th>SI</th>
            <th>Survey Title</th>
-          
+            <th>Creation Time</th>
            <th>Category</th>
 
            <th>update</th>
@@ -50,7 +50,7 @@ const UpdateSurveys = () => {
                  <p>{item.title}</p>
              </td>
             
-            
+            <td>{new Date(item.timestamp).toDateString()}</td>
 
              <td>
                {item.category}
