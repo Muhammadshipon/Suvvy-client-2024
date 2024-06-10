@@ -66,10 +66,10 @@ const handleUserRole =async(id,role)=>{
 
   return (
     <div className="text-center">
-    <div className="flex">
+    <div className="flex flex-col md:flex-row items-center ">
     <SectionTitle>All Users</SectionTitle>
 
-    <select value={filter} onChange={(e)=>setFilter(e.target.value)}  className="select select-xs max-w-xs bg-violet-800 text-white">
+    <select value={filter} onChange={(e)=>setFilter(e.target.value)}  className="select select-full max-w-xs btn bg-gray-200 md:mr-20 ">
                 
                 <option value='all'>All User</option>              
                 <option value='admin'>admin</option>              

@@ -15,6 +15,7 @@ import UpdateSurveyForm from "../Pages/Dashboard/surveyor/UpdateSurveyForm";
 import SurveyResponse from "../Pages/Dashboard/surveyor/SurveyResponse";
 import SurveyResponseDetails from "../Pages/Dashboard/surveyor/SurveyResponseDetails";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
+import AllSurveys from "../Pages/Dashboard/Admin/AllSurveys";
 
 export const router = createBrowserRouter([
   {
@@ -83,6 +84,10 @@ export const router = createBrowserRouter([
       {
         path:'/dashboard/admin/manage-users',
         element:<PrivateRoute><ManageUsers></ManageUsers></PrivateRoute>
+      },    
+      {
+        path:'/dashboard/admin/all-surveys',
+        element:<PrivateRoute><AllSurveys></AllSurveys></PrivateRoute>
       },    
     ]
   }
