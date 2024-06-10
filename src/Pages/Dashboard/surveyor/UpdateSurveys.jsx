@@ -30,6 +30,7 @@ const UpdateSurveys = () => {
            <th>SI</th>
            <th>Survey Title</th>
             <th>Creation Time</th>
+          
            <th>Category</th>
 
            <th>update</th>

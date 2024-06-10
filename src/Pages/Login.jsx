@@ -16,6 +16,31 @@ const {signIn,googleSignIn} = useAuth();
      const password = form.password.value;
      console.log(email,password);
 
+     if(!/^(?=.*[a-z])(?=.*[A-Z]).*$/.test(password)){
+      
+      Swal.fire({
+        title: "Password Type is Wrong",
+        text: "Your password should have at least one upperCase and lowerCase character",
+        icon: "error"
+      });
+      return ;
+    }
+   
+    else if(password.length<6){
+      Swal.fire({
+        title: "Password Type is Wrong",
+        text: "password must be at least 6 character",
+        icon: "error"
+      });
+     return;
+    }
+
+
+
+
+
+
+
      signIn(email,password)
      .then(result=>{
       const user = result.user;
@@ -25,10 +50,15 @@ const {signIn,googleSignIn} = useAuth();
        
         icon: "success"
       });
-      // navigate(from);
+      navigate(location?.state? location.state : "/")
      })
      .catch(error=>{
       console.log(error.message);
+      Swal.fire({
+        title: "Wrong Email or Password",
+       
+        icon: "error"
+      });
      })
   }
 
@@ -46,7 +76,7 @@ const {signIn,googleSignIn} = useAuth();
       axiosPublic.post('/users',userInf)
       .then(res=>{
         console.log(res.data);
-        navigate('/')
+        navigate(location?.state? location.state : "/")
       })
       console.log(res.user);
       

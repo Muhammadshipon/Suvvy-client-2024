@@ -43,7 +43,7 @@ console.log('the id is',id);
          <tr>  
            <th>SI</th>
            <th>Survey Title</th>
-            <th>Surveyor</th>
+            <th>Surveyor Email</th>
            <th>Status</th>
 
            <th>Responses</th>
@@ -67,7 +67,7 @@ console.log('the id is',id);
             <td>{item.surveyor}</td>
 
              <td>
-              <button disabled={item.status==="unpublished"} onClick={()=>handleModal(item._id)} className={` text-white px-2 rounded-full hover:scale-105 ${item.status=="publish"? 'bg-violet-600' : 'bg-slate-600 hover:scale-100'}`}> {item.status}</button>
+              <button disabled={item.status==="unpublished"} onClick={()=>handleModal(item._id)} className={` text-white px-2 rounded-full hover:scale-105 ${item.status=="publish"? 'bg-violet-600' : 'bg-pink-600 hover:scale-100'}`}> {item.status}</button>
              
               
              </td>

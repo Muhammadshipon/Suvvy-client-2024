@@ -10,7 +10,8 @@ import useAuth from '../../hooks/useAuth'
 import useLoggedUser from '../../hooks/useLoggedUser'
 import { FaBookOpen, FaCircleUser, FaUsersGear, FaUsersRectangle } from 'react-icons/fa6'
 import { BiSolidBookAdd, BiSolidEditAlt } from 'react-icons/bi'
-import { FaListAlt, FaRegUser, FaUserAlt, FaUserEdit, FaUsers, FaUsersCog } from 'react-icons/fa'
+import { FaCompressAlt, FaListAlt, FaRegUser, FaReply, FaUserAlt, FaUserEdit, FaUsers, FaUsersCog } from 'react-icons/fa'
+import { RiFeedbackFill, RiFeedbackLine } from 'react-icons/ri'
 
 const Sidebar = () => {
   const { logOut } = useAuth();
@@ -128,6 +129,19 @@ const Sidebar = () => {
                 <MdFeedback className='w-5 h-5' />
 
                 <span className='mx-4 font-medium'>Response</span>
+              </NavLink>
+
+              <NavLink
+                to="/dashboard/surveyor/feedback"
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
+                    isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-700'
+                  }`
+                }
+              >
+                <FaReply className='w-5 h-5' />
+
+                <span className='mx-4 font-medium'>Feedbacks</span>
               </NavLink>
 
 

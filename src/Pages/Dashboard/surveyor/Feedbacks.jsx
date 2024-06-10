@@ -1,12 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { Link } from "react-router-dom";
 import SectionTitle from "../../../Shared/SectionTitle";
-import { FaListCheck } from "react-icons/fa6";
 
 
-const SurveyResponse = () => {
+const Feedbacks = () => {
   const {user} = useAuth();
   const axiosSecure = useAxiosSecure();
   const {data:surveys=[]} = useQuery({
@@ -17,10 +15,12 @@ const SurveyResponse = () => {
       return data; 
     }
   })
-  console.log(surveys);
+
+  const unpublishedSurveys = surveys.filter(survey=>survey.status==='unpublished');
+  
   return (
     <div className="text-center">
-    <SectionTitle>surveys Responses</SectionTitle>
+    <SectionTitle>Unpublished Surveys Feedback</SectionTitle>
 
     <div className="overflow-x-auto max-w-5xl px-10 mx-auto mb-10">
      <table className="table">
@@ -29,11 +29,11 @@ const SurveyResponse = () => {
          <tr>
            <th>SI</th>
            <th>Survey Title</th>
-            <th>Deadline</th>
             <th>Status</th>
+          
            <th>Category</th>
 
-           <th>Responses</th>
+           <th>Feedback</th>
          </tr>
        </thead>
        <tbody>
@@ -42,7 +42,7 @@ const SurveyResponse = () => {
 
 
          {
-           surveys.map((item,idx)=>(
+           unpublishedSurveys.map((item,idx)=>(
 
              <tr key={item._id}>
              <td>{idx+1}</td>
@@ -51,14 +51,13 @@ const SurveyResponse = () => {
                  <p>{item.title}</p>
              </td>
             
-            <td>{item.deadline}</td>
             <td>{item.status}</td>
 
              <td>
                {item.category}
              </td>
              <th>
-           <Link to={`/dashboard/response/${item._id}`}><span className=" text-pink-600 flex items-center gap-2"><FaListCheck/>Details</span></Link>
+               {item.feedback}
              </th>
            </tr>
           
@@ -73,7 +72,7 @@ const SurveyResponse = () => {
         
        </tbody>
       
-      {surveys.length===0 && <p className="text-xl mt-10 ml-5">No Data Available...</p>}
+      {unpublishedSurveys.length===0 && <p className="text-xl mt-10 ml-5">No Data Available...</p>}
 
      </table>
    </div> 
@@ -81,4 +80,4 @@ const SurveyResponse = () => {
   );
 };
 
-export default SurveyResponse;
+export default Feedbacks;

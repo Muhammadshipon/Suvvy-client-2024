@@ -16,6 +16,7 @@ import SurveyResponse from "../Pages/Dashboard/surveyor/SurveyResponse";
 import SurveyResponseDetails from "../Pages/Dashboard/surveyor/SurveyResponseDetails";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 import AllSurveys from "../Pages/Dashboard/Admin/AllSurveys";
+import Feedbacks from "../Pages/Dashboard/surveyor/Feedbacks";
 
 export const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ export const router = createBrowserRouter([
       {
         path:"/dashboard/surveyor/response",
         element:<PrivateRoute><SurveyResponse></SurveyResponse></PrivateRoute>
+      },
+      {
+        path:"/dashboard/surveyor/feedback",
+        element:<PrivateRoute><Feedbacks></Feedbacks></PrivateRoute>
       },
       {
         path:"/dashboard/response/:id",
