@@ -1,8 +1,48 @@
-# React + Vite
+# Project_Name: Suvvy
+# Live-site: https://suvvy-2024.web.app/
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Overview: 
 
-Currently, two official plugins are available:
+    A comprehensive MERN stack Survey application featuring robust user management, role-based access control, real-time voting results, and integrated payment functionalities
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+# Features:
+- User Authentication:
+
+Email/password sign-up and social media login.
+
+- Role Management:
+
+Roles: user, surveyor, admin, pro-user with default role assignment.
+
+- Survey Creation and Management:
+
+Surveyors can create, update, and manage surveys with multiple questions.
+
+- Voting and Results Visualization:
+
+Users can vote on surveys; real-time result visualization post-vote or after the deadline.
+
+- Admin Dashboard:
+
+Manage users, roles, surveys, payments, and responses.
+
+- Pro-User Membership:
+
+Payment integration for pro-user upgrades and additional privileges.
+
+- Responsive Design:
+
+Mobile, tablet, and desktop-friendly interface.
+
+- Real-time Notifications:
+
+Sweet alerts/toasts for CRUD operations and authentication feedback.
+
+- Survey Feedback and Reporting:
+
+Users can report surveys; admins provide feedback on unpublishing.
+
+- JWT Authentication:
+
+Secure JWT tokens for authentication and private route handling.
