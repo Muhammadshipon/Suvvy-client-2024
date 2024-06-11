@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { ScrollRestoration, useParams } from "react-router-dom";
 import useAxiosPublic from "../hooks/useAxiosPublic";
-import { useState } from "react";
+import {  useState } from "react";
 import Swal from "sweetalert2";
 import useAuth from "../hooks/useAuth";
 import useLoggedUser from "../hooks/useLoggedUser";
@@ -73,18 +73,25 @@ const SurveyDetails = () => {
               
               
                   // Vote Count 
-  const totalVotes = survey?.questions?.reduce((total, question) => {
-    return total + question.options.yes + question.options.no;
-  }, 0);
-  const yesVotes = survey?.questions?.reduce((total, question) => {
-    return total + question.options.yes;
-  }, 0);
-  const noVotes = survey?.questions?.reduce((total, question) => {
-    return total + question.options.no;
-  }, 0);
-
   
 
+    const totalVotes = survey?.questions?.reduce((total, question) => {
+      return total + question.options.yes + question.options.no;
+    }, 0);
+    const yesVotes = survey?.questions?.reduce((total, question) => {
+      return total + question.options.yes;
+    }, 0);
+    const noVotes = survey?.questions?.reduce((total, question) => {
+      return total + question.options.no;
+    }, 0);
+
+
+   
+
+ 
+
+  
+  
 
                   // handle all form 
   const handleOptionChange = (questionId, option) => {
@@ -98,10 +105,59 @@ const SurveyDetails = () => {
 
 
 
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+  
+
+//   try {
+//     for (const questionId in selectedOptions) {
+//       const vote = selectedOptions[questionId];
+//       await axiosPublic.post('/vote', {
+//         surveyId,
+//         questionId,
+//         vote
+//       });
+//     }
+
+
+    
+
+
+//     const {data} = await axiosPublic.patch(`/surveys/${surveyId}`,{userEmail:user?.email,
+//       userName:user?.displayName
+//     })
+//     // console.log(data);
+//     if(data.modifiedCount>0){
+//         refetchForSurvey();
+       
+//     Swal.fire({
+//       title: "Your Vote Submitted Successfully!",
+     
+//       icon: "success"
+//     });
+
+  
+    
+//     const {data} = await axiosPublic.post('/my-surveys',{surveyId,title:survey?.title,category:survey?.category, email:user?.email});
+//     console.log(data);
+  
+//     }
+  
+   
+//   } catch (error) {
+//     console.error('Error recording vote:', error);
+  
+//   }
+
+ 
+
+// };
+
 const handleSubmit = async (e) => {
   e.preventDefault();
 
   try {
+    // Submit votes
     for (const questionId in selectedOptions) {
       const vote = selectedOptions[questionId];
       await axiosPublic.post('/vote', {
@@ -111,33 +167,63 @@ const handleSubmit = async (e) => {
       });
     }
 
+    // Fetch updated survey data after voting
+    const updatedSurveyResponse = await axiosPublic.get(`/surveys/${surveyId}`);
+    const updatedSurvey = updatedSurveyResponse.data;
 
-    const {data} = await axiosPublic.patch(`/surveys/${surveyId}`,{userEmail:user?.email,
-      userName:user?.displayName
-    })
-    // console.log(data);
-    if(data.modifiedCount>0){
-        refetchForSurvey();
-       
-    Swal.fire({
-      title: "Your Vote Submitted Successfully!",
-     
-      icon: "success"
+    // Calculate new total votes, yes votes, and no votes
+    const totalVotes = updatedSurvey.questions.reduce((total, question) => {
+      return total + question.options.yes + question.options.no;
+    }, 0);
+    const yesVotes = updatedSurvey.questions.reduce((total, question) => {
+      return total + question.options.yes;
+    }, 0);
+    const noVotes = updatedSurvey.questions.reduce((total, question) => {
+      return total + question.options.no;
+    }, 0);
+
+    // Update the survey with new vote counts
+    await axiosPublic.patch(`/surveys/${surveyId}/votes`, {
+      totalVotes,
+      yesVotes,
+      noVotes
     });
 
-  
-    
-    const {data} = await axiosPublic.post('/my-surveys',{surveyId,title:survey?.title,category:survey?.category, email:user?.email});
-    console.log(data);
-  
+    // Update survey participation record
+    const participationData = await axiosPublic.patch(`/surveys/${surveyId}`, {
+      userEmail: user?.email,
+      userName: user?.displayName
+    });
+
+    if (participationData.data.modifiedCount > 0) {
+      refetchForSurvey();
+      Swal.fire({
+        title: "Your Vote Submitted Successfully!",
+        icon: "success"
+      });
+
+      await axiosPublic.post('/my-surveys', {
+        surveyId,
+        title: survey?.title,
+        category: survey?.category,
+        email: user?.email
+      });
     }
-   
-   
   } catch (error) {
     console.error('Error recording vote:', error);
-  
+    Swal.fire({
+      title: "Error",
+      text: error.message,
+      icon: "error"
+    });
   }
 };
+
+
+
+
+
+
 
 
 

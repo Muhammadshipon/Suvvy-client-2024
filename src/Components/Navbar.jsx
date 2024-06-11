@@ -7,8 +7,8 @@ import useAuth from "../hooks/useAuth";
 const Navbar = () => {
   const {user,logOut} = useAuth();
   const link = <>
-         <NavLink><li><a>Home</a></li></NavLink>
-         <NavLink><li><a>Surveys</a></li></NavLink>
+         <NavLink to={'/'}><li><a>Home</a></li></NavLink>
+         <NavLink to={'/surveys'}><li><a>Surveys</a></li></NavLink>
          <NavLink><li><a><span className="text-yellow-400">Pro</span>User</a></li></NavLink>
         
          </>

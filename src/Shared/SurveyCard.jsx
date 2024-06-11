@@ -9,7 +9,7 @@ const SurveyCard = ({survey}) => {
   }, 0);
 
   return (
-    <Link to={`survey/details/${_id}`}>
+    <Link to={`/survey/details/${_id}`}>
       <div className="card w-full bg-base-100 shadow-xl hover:bg-slate-400">
   <div className="card-body ">
     <h2 className="card-title text-blue-700">{title}</h2>

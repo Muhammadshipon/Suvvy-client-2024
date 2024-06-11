@@ -8,10 +8,10 @@ import { Link } from 'react-router-dom'
 import { MdComment, MdFeedback } from 'react-icons/md'
 import useAuth from '../../hooks/useAuth'
 import useLoggedUser from '../../hooks/useLoggedUser'
-import { FaBookOpen, FaCircleUser, FaUsersGear, FaUsersRectangle } from 'react-icons/fa6'
+import { FaBookOpen, FaCircleUser,  } from 'react-icons/fa6'
 import { BiSolidBookAdd, BiSolidEditAlt } from 'react-icons/bi'
-import { FaCompressAlt, FaListAlt, FaRegUser, FaReply, FaUserAlt, FaUserEdit, FaUsers, FaUsersCog } from 'react-icons/fa'
-import { RiFeedbackFill, RiFeedbackLine } from 'react-icons/ri'
+import {  FaListAlt, FaReply,  FaUsersCog } from 'react-icons/fa'
+
 
 const Sidebar = () => {
   const { logOut } = useAuth();
@@ -109,7 +109,7 @@ const Sidebar = () => {
                 to='/dashboard/update-surveys'
                 className={({ isActive }) =>
                   `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
-                    isActive ? 'bg-gray-300  text-gray-100' : 'text-gray-700'
+                    isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-700'
                   }`
                 }
               >
@@ -162,7 +162,7 @@ const Sidebar = () => {
                 to='/dashboard/user/my-surveys'
                 className={({ isActive }) =>
                   `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
-                    isActive ? 'bg-gray-300  text-gray-100' : 'text-gray-700'
+                    isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-700'
                   }`
                 }
               >
@@ -202,7 +202,7 @@ const Sidebar = () => {
                 to='/dashboard/user/my-surveys'
                 className={({ isActive }) =>
                   `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
-                    isActive ? 'bg-gray-300  text-gray-100' : 'text-gray-700'
+                    isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-700'
                   }`
                 }
               >

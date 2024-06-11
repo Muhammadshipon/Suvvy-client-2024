@@ -13,7 +13,7 @@ const AllSurveys = () => {
   const axiosSecure = useAxiosSecure();
 
   const {data:surveys=[],refetch} = useQuery({
-    queryKey:['users'],
+    queryKey:['allSurveys'],
     queryFn:async()=>{
       const {data} = await axiosSecure.get('/surveys')
       return data;

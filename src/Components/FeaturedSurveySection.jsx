@@ -8,13 +8,6 @@ import useAxiosPublic from "../hooks/useAxiosPublic";
 const FeaturedSurveySection = () => {
 
   const axiosPublic = useAxiosPublic();
-  // const [surveys,setSurveys] = useState([]);
-  // useEffect(()=>{
-  //   fetch('survey.json')
-  //   .then(res=>res.json())
-  //   .then(data=>setSurveys(data));
-    
-  // },[])
 
   const {data:surveys=[]} = useQuery({
     queryKey:['surveys'],
