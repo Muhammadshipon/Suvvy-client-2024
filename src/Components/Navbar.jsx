@@ -1,15 +1,16 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 
 
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const {user,logOut} = useAuth();
   const link = <>
          <NavLink to={'/'}><li><a>Home</a></li></NavLink>
          <NavLink to={'/surveys'}><li><a>Surveys</a></li></NavLink>
-         <NavLink><li><a><span className="text-yellow-400">Pro</span>User</a></li></NavLink>
+         <NavLink to={'/pro-user'}><li><a><span className="text-yellow-400">Pro</span>User</a></li></NavLink>
         
          </>
   return (
@@ -40,14 +41,13 @@ const Navbar = () => {
         </div>
       </div>
       <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-        <li>
-          <a className="justify-between">
-            Profile
-            <span className="badge">New</span>
-          </a>
-        </li>
+        
         <Link to='/dashboard'><li><a>Dashboard</a></li></Link>
-        <li onClick={logOut}><a>Logout</a></li>
+        <li onClick={()=>{
+          logOut()
+          .then(()=>navigate('/'))
+
+        }}><a>Logout</a></li>
       </ul>
     </div>
         :

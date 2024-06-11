@@ -105,53 +105,7 @@ const SurveyDetails = () => {
 
 
 
-// const handleSubmit = async (e) => {
-//   e.preventDefault();
-  
 
-//   try {
-//     for (const questionId in selectedOptions) {
-//       const vote = selectedOptions[questionId];
-//       await axiosPublic.post('/vote', {
-//         surveyId,
-//         questionId,
-//         vote
-//       });
-//     }
-
-
-    
-
-
-//     const {data} = await axiosPublic.patch(`/surveys/${surveyId}`,{userEmail:user?.email,
-//       userName:user?.displayName
-//     })
-//     // console.log(data);
-//     if(data.modifiedCount>0){
-//         refetchForSurvey();
-       
-//     Swal.fire({
-//       title: "Your Vote Submitted Successfully!",
-     
-//       icon: "success"
-//     });
-
-  
-    
-//     const {data} = await axiosPublic.post('/my-surveys',{surveyId,title:survey?.title,category:survey?.category, email:user?.email});
-//     console.log(data);
-  
-//     }
-  
-   
-//   } catch (error) {
-//     console.error('Error recording vote:', error);
-  
-//   }
-
- 
-
-// };
 
 const handleSubmit = async (e) => {
   e.preventDefault();

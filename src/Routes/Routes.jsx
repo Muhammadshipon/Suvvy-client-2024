@@ -18,6 +18,11 @@ import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 import AllSurveys from "../Pages/Dashboard/Admin/AllSurveys";
 import Feedbacks from "../Pages/Dashboard/surveyor/Feedbacks";
 import SurveysPage from "../Pages/SurveysPage";
+import ProUser from "../Pages/ProUser";
+import Payment from "../Pages/Payment";
+import PaymentList from "../Pages/Dashboard/Admin/PaymentList";
+import Profile from "../Pages/Dashboard/Profile";
+import AdminRoute from "./AdminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +36,14 @@ export const router = createBrowserRouter([
       {
         path:"/surveys",
         element:<SurveysPage></SurveysPage>
+      },
+      {
+        path:"/pro-user",
+        element:<ProUser></ProUser>
+      },
+      {
+        path:"/payment",
+        element:<Payment></Payment>
       },
       {
         path:"/login",
@@ -50,7 +63,12 @@ export const router = createBrowserRouter([
     path:'/dashboard',
     element:<PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
     children:[
+      {
+        path:'/dashboard',
+        element:<PrivateRoute><Profile></Profile></PrivateRoute>
+      },
           // surveyor
+
       {
         path:'/dashboard/create-survey',
         element:<PrivateRoute><CreateSurvey></CreateSurvey></PrivateRoute>
@@ -93,11 +111,15 @@ export const router = createBrowserRouter([
             //  Admin 
       {
         path:'/dashboard/admin/manage-users',
-        element:<PrivateRoute><ManageUsers></ManageUsers></PrivateRoute>
+        element:<AdminRoute><PrivateRoute><ManageUsers></ManageUsers></PrivateRoute></AdminRoute>
       },    
       {
         path:'/dashboard/admin/all-surveys',
-        element:<PrivateRoute><AllSurveys></AllSurveys></PrivateRoute>
+        element:<AdminRoute><PrivateRoute><AllSurveys></AllSurveys></PrivateRoute></AdminRoute>
+      },    
+      {
+        path:'/dashboard/admin/payments',
+        element:<AdminRoute><PrivateRoute><PaymentList></PaymentList></PrivateRoute></AdminRoute>
       },    
     ]
   }

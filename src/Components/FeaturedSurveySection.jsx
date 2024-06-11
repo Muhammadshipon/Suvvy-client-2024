@@ -12,11 +12,12 @@ const FeaturedSurveySection = () => {
   const {data:surveys=[]} = useQuery({
     queryKey:['surveys'],
     queryFn:async()=>{
-      const {data} = await axiosPublic.get('/surveys');
+      const {data} = await axiosPublic.get('/surveys/features');
       return data;
     }
   })
-
+ 
+  const publishSurveys = surveys?.filter(survey=>survey.status === 'publish')
 
   return (
     <div className="px-5 pb-40 bg-gradient-to-r  from-gray-200 to-[#A0ABEB]    rounded-t-[100px]  relative bottom-24 flex flex-col justify-center items-center">
@@ -24,7 +25,7 @@ const FeaturedSurveySection = () => {
 
      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5  ">
       {
-        surveys.map((survey,idx)=><SurveyCard survey={survey} key={idx}></SurveyCard>)
+        publishSurveys.map((survey,idx)=><SurveyCard survey={survey} key={idx}></SurveyCard>)
       }
       
       </div>  

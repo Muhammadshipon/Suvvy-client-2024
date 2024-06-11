@@ -10,7 +10,7 @@ import useAuth from '../../hooks/useAuth'
 import useLoggedUser from '../../hooks/useLoggedUser'
 import { FaBookOpen, FaCircleUser,  } from 'react-icons/fa6'
 import { BiSolidBookAdd, BiSolidEditAlt } from 'react-icons/bi'
-import {  FaListAlt, FaReply,  FaUsersCog } from 'react-icons/fa'
+import {  FaDollarSign, FaListAlt, FaReply,  FaUsersCog } from 'react-icons/fa'
 
 
 const Sidebar = () => {
@@ -276,6 +276,20 @@ const Sidebar = () => {
                 <FaListAlt className='w-5 h-5' />
 
                 <span className='mx-4 font-medium'>All Surveys</span>
+              </NavLink>
+
+              <NavLink
+                to='/dashboard/admin/payments'
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
+                    isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-700'
+                  }`
+                }
+              >
+                
+                <FaDollarSign className='w-5 h-5' />
+
+                <span className='mx-4 font-medium'>Payments</span>
               </NavLink>
               
              

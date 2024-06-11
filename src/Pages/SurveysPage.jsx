@@ -12,7 +12,7 @@ const SurveysPage = () => {
   const [displaySurveys,setDisplaySurveys] = useState([]);
   const axiosPublic = useAxiosPublic();
 
-  const {data:surveys=[],refetch} = useQuery({
+  const {data:surveys=[]} = useQuery({
     queryKey:['surveys',sort],
     queryFn:async()=>{
       const {data} = await axiosPublic.get(`/surveys?sort=${sort}`)
@@ -21,34 +21,34 @@ const SurveysPage = () => {
   })
   console.log(surveys);
 
-
+  const publishSurveys = surveys?.filter(survey=>survey.status === 'publish')
   useEffect(()=>{
 
     if(filter==='all'){
-      setDisplaySurveys(surveys)
+      setDisplaySurveys(publishSurveys)
     }
     if(filter==='customer satisfaction'){
-      const survey = surveys.filter(survey=>survey.category==='customer satisfaction');
+      const survey = publishSurveys.filter(survey=>survey.category==='customer satisfaction');
       setDisplaySurveys(survey);
     }
     if(filter==='employee engagement'){
-      const survey = surveys.filter(survey=>survey.category==='employee engagement');
+      const survey = publishSurveys.filter(survey=>survey.category==='employee engagement');
       setDisplaySurveys(survey);
     }
     if(filter==='market research'){
-      const survey = surveys.filter(survey=>survey.category==='market research');
+      const survey = publishSurveys.filter(survey=>survey.category==='market research');
       setDisplaySurveys(survey);
     }
     if(filter==='political opinion'){
-      const survey = surveys.filter(survey=>survey.category==='political opinion');
+      const survey = publishSurveys.filter(survey=>survey.category==='political opinion');
       setDisplaySurveys(survey);
     } 
     if(filter==='product feedback'){
-      const survey = surveys.filter(survey=>survey.category==='product feedback');
+      const survey = publishSurveys.filter(survey=>survey.category==='product feedback');
       setDisplaySurveys(survey);
     } 
     if(filter==='health and wellness'){
-      const survey = surveys.filter(survey=>survey.category==='health and wellness');
+      const survey = publishSurveys.filter(survey=>survey.category==='health and wellness');
       setDisplaySurveys(survey);
     } 
   },[filter,surveys])
