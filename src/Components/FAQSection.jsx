@@ -3,7 +3,7 @@ import SectionTitle from "../Shared/SectionTitle";
 
 const FAQSection = () => {
   return (
-    <div className="relative  top-20 rounded-t-[100px]  bg-gradient-to-r pb-36 pt-16 lg:pt-0 from-blue-200 via-purple-100 to-pink-200 text-pink-700 flex flex-col items-center justify-center px-10">
+    <div data-aos="fade-up" data-aos-duration="2000" className="relative  top-20 rounded-t-[100px]  bg-gradient-to-r pb-36 pt-16 lg:pt-0 from-blue-200 via-purple-100 to-pink-200 text-pink-700 flex flex-col items-center justify-center px-10">
       <SectionTitle>FAQ Section</SectionTitle>
       <div className="collapse collapse-plus ">
   <input type="radio" name="my-accordion-3" defaultChecked /> 

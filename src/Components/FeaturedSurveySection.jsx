@@ -20,10 +20,10 @@ const FeaturedSurveySection = () => {
   const publishSurveys = surveys?.filter(survey=>survey.status === 'publish')
 
   return (
-    <div className="px-5 pb-40 bg-gradient-to-r  from-gray-200 to-[#A0ABEB]    rounded-t-[100px]  relative bottom-24 flex flex-col justify-center items-center">
+    <div  className="px-5 pb-40 bg-gradient-to-r  from-gray-200 to-[#A0ABEB]    rounded-t-[100px]  relative bottom-24 flex flex-col justify-center items-center">
        <SectionTitle>Featured Surveys</SectionTitle>
 
-     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5  ">
+     <div data-aos="fade-up" data-aos-duration="1000" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5  ">
       {
         publishSurveys.map((survey,idx)=><SurveyCard survey={survey} key={idx}></SurveyCard>)
       }

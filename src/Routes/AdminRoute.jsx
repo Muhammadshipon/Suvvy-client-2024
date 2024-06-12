@@ -4,26 +4,27 @@ import useAdmin from "../hooks/useAdmin";
 
 
 
+const AdminRoute = ({ children }) => {
+    const { user, loading, logOut } = useAuth();
+    const [isAdmin, isAdminLoading] = useAdmin();
+    // const location = useLocation() 
 
-const AdminRoute = ({children}) => {
-  const location = useLocation();
-  const {user,loading} = useAuth();
-  const [isAdmin,isLoading] = useAdmin();
+    if (loading || isAdminLoading) {
+        return <div className="w-screen mx-auto">
+          <progress className="progress text-center "></progress>
+        </div>
+    }
 
-  if(loading || isLoading){
-    return  <div className="flex flex-row justify-center items-center h-full w-full">
-    <span className="loading loading-ring loading-xs"></span>
-     <span className="loading loading-ring loading-sm"></span>
-     <span className="loading loading-ring loading-md"></span>
-     <span className="loading loading-ring loading-lg"></span>
-    </div>
-  }
-  if(user && isAdmin){
-    return children;
-  }
-  return<Navigate to={"/login"} state={location.pathname}></Navigate>
+    if (user && isAdmin) {
+        return children;
+    }
+
+    else{
+        // return <Navigate to={"/login"} state={location.pathname}></Navigate>
+        return logOut();
+    }
+  
 
 };
-
 
 export default AdminRoute;

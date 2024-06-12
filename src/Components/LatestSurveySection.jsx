@@ -18,10 +18,10 @@ const LatestSurveySection = () => {
 
   const publishSurveys = surveys?.filter(survey=>survey.status === 'publish')
   return (
-    <div className="px-5 relative bottom-48 bg-white  rounded-t-[100px]   flex flex-col justify-center items-center">
+    <div  className="px-5 relative bottom-48 bg-white  rounded-t-[100px]   flex flex-col justify-center items-center">
        <SectionTitle>Latest Surveys</SectionTitle>
 
-     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pb-20 ">
+     <div data-aos="fade-up" data-aos-duration="1000" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pb-20 ">
       {
         publishSurveys.map((survey,idx)=><SurveyCard className='bg-yellow-500' survey={survey} key={idx}></SurveyCard>)
       }

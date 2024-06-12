@@ -28,7 +28,7 @@ const PaymentList = () => {
            <th>User Email</th>
           <th>Date</th>
            <th>Transaction Id</th>
-
+            <th>Pay For</th>
            <th>Amount</th>
          </tr>
        </thead>
@@ -55,6 +55,12 @@ const PaymentList = () => {
              <td>
                {item.transactionId}
              </td>
+             
+             <td>
+              {item.role}
+
+             </td>
+
              <th>
                ${item.amount}
              </th>

@@ -3,7 +3,7 @@ import {  useEffect, useState } from "react";
 import axios from "axios";
 
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { ScrollRestoration, useNavigate } from "react-router-dom";
 
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import useAuth from "../hooks/useAuth";
@@ -107,9 +107,23 @@ const CheckoutForm = () => {
         console.log('payment save database ',data);
 
          if(data.modifiedCount>0){
-         
 
-          const {data} = await axiosPublic.patch(`/pro-user/${loggedUser?._id}`,{role:'prouser'})
+          if(taka?.amount==500||taka?.amount==1000){
+
+            const {data} = await axiosPublic.patch(`/pro-user/${loggedUser?._id}`,{role:'surveyor'})
+            console.log(data);
+
+            if(data.modifiedCount>0){
+               Swal.fire({
+              title: "Payment successfully",
+              
+              icon: "success"
+            });
+            navigate(`/`)
+            }
+          }
+            else{
+              const {data} = await axiosPublic.patch(`/pro-user/${loggedUser?._id}`,{role:'prouser'})
           console.log(data);
           if(data.modifiedCount>0){
              Swal.fire({
@@ -119,16 +133,19 @@ const CheckoutForm = () => {
           });
           navigate(`/`)
           }
+            }
+          
          }
        
       }
     }
   }
   return (
-    <div className="md:mx-24  text-center">
+    <div className="md:mx-24 my-14  text-center">
+      <ScrollRestoration></ScrollRestoration>
     <form onSubmit={handleSubmit}>
    <CardElement
-   className="bg-gray-50 px-10 py-4 rounded-xl w-full md:w-1/2  mx-auto"
+   className="bg-gray-100 px-10 py-5 rounded-xl w-full md:w-1/2  mx-auto"
      options={{
        style: {
         

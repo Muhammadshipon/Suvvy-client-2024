@@ -1,6 +1,6 @@
 import useAuth from "../../hooks/useAuth";
 import useLoggedUser from "../../hooks/useLoggedUser";
-
+import 'animate.css';
 
 const Profile = () => {
   const [loggedUser] = useLoggedUser();
@@ -8,11 +8,12 @@ const Profile = () => {
   return (
    <div className="flex justify-center items-center mt-10">
  <div className="flex flex-col justify-center max-w-xs p-6 shadow-md rounded-xl sm:px-12 dark:bg-gray-50 dark:text-gray-800">
-    <img src={user?.photoURL}  className="w-32 h-32 mx-auto rounded-full dark:bg-gray-500 aspect-square" />
+    <img src={user?.photoURL}  className="w-32 h-32 mx-auto rounded-full dark:bg-gray-500 aspect-square animate__swing animate__animated" />
     <div className="space-y-4 text-center divide-y dark:divide-gray-300">
       <div className="my-2 space-y-1">
         <h2 className="text-xl font-semibold sm:text-2xl">{user.displayName}</h2>
         <p className="px-5 text-xs sm:text-base dark:text-gray-600 uppercase">{loggedUser.role}</p>
+        <p className="px-5 text-xs sm:text-base text-gray-600 ">{loggedUser.email}</p>
       </div>
       <div className="flex justify-center pt-2 space-x-4 align-center">
         <a rel="noopener noreferrer" href="#" aria-label="GitHub" className="p-2 rounded-md dark:text-gray-800 hover:dark:text-violet-600">

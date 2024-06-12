@@ -283,7 +283,7 @@ const handleSubmit = async (e) => {
         {
         user?
         
-        loggedUser?.role==='user' && !exist && !dateOver ||loggedUser?.role==='prouser'&& !exist && !dateOver ?
+        loggedUser?.role==='user' && !exist && !dateOver || loggedUser?.role==='prouser'&& !exist && !dateOver ?
         <button  type="submit" className="bg-blue-500 btn text-white p-2 rounded hover:scale-105">Submit Votes</button>
         :
         <button disabled type="submit" className="bg-blue-500 btn text-white p-2 rounded hover:scale-105">Submit Votes</button>

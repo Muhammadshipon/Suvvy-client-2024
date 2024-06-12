@@ -49,8 +49,8 @@ useEffect(()=>{
   
 
 
-const handleUserRole =async(id,role)=>{
-  console.log(id,role);
+const handleUserRole =async(id,role,email)=>{
+  console.log(id,role,email);
   const {data} = await axiosSecure.patch(`/users/${id}`,{role:role});
   console.log(data);
    if(data.modifiedCount>0){
@@ -60,6 +60,11 @@ const handleUserRole =async(id,role)=>{
        timer:2000,
       icon: "success"
     });
+   }
+
+   if(role === 'user'){
+    const {data} = await axiosSecure.delete(`/delete/payment/${email}`);
+    console.log(data);
    }
 
 }
@@ -115,7 +120,7 @@ const handleUserRole =async(id,role)=>{
              <td>
            
             
-             <select value={user.role} onChange={(e)=>handleUserRole(user._id, e.target.value)}  className="select select-xs max-w-xs bg-violet-800 text-white">
+             <select value={user.role} onChange={(e)=>handleUserRole(user._id, e.target.value,user.email)}  className="select select-xs max-w-xs bg-violet-800 text-white">
                 
                  <option value='admin'>admin</option>              
                  <option value='surveyor'>surveyor</option>

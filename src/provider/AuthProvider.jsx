@@ -2,7 +2,8 @@ import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged,
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.config";
 import useAxiosPublic from "../hooks/useAxiosPublic";
-// import useAxiosPublic from "../hooks/useAxiosPublic";
+
+
 
 
 
@@ -40,32 +41,34 @@ const AuthProvider = ({children}) => {
   setLoading(true)
   return signOut(auth);
  }
-  useEffect(()=>{
-    const unsubscribe = onAuthStateChanged(auth,currentUser=>{
-      setUser(currentUser)
-    
-      if(currentUser){
-          // get token and stored client 
-          const userInf = {email: currentUser.email}
-          axiosPublic.post('/jwt',userInf)
-          .then(res=>{
-            if(res.data.token){
-              localStorage.setItem('access-token',res.data.token);
-              setLoading(false);
-            }
-          })
+
+
+ useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, currentUser => {
+      setUser(currentUser);
+      if (currentUser) {
+          // get token and store client
+          const userInfo = { email: currentUser.email };
+          axiosPublic.post('/jwt', userInfo)
+              .then(res => {
+                  if (res.data.token) {
+                      localStorage.setItem('access-token', res.data.token);
+                      setLoading(false);
+                  }
+              })
       }
-      else{
-            // remove token 
-            localStorage.removeItem('access-token')
-            setLoading(false);
+      else {
+          // TODO: remove token (if token stored in the client side: Local storage, caching, in memory)
+          localStorage.removeItem('access-token');
+          setLoading(false);
       }
-     
-    })
-    return ()=>{
+      
+  });
+  return () => {
       return unsubscribe();
-    }
-  },[])
+  }
+}, [axiosPublic])
+
 
   const authInfo = {
       user,

@@ -13,9 +13,11 @@ import { BiSolidBookAdd, BiSolidEditAlt } from 'react-icons/bi'
 import {  FaDollarSign, FaListAlt, FaReply,  FaUsersCog } from 'react-icons/fa'
 
 
+
 const Sidebar = () => {
   const { logOut } = useAuth();
   const [loggedUser] = useLoggedUser();
+  
   const [isActive, setActive] = useState(false)
 
   // Sidebar Responsive Handler
